@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sentinel Claim Report</title><style>
+:root{--ink:#0E1830;--muted:#5b6478;--line:#e3e6ee;--bg:#f6f7fb;--card:#fff;
+--high:#b42318;--high-bg:#fee4e2;--med:#a15c07;--med-bg:#fef0c7;--low:#175cd3;--low-bg:#e0eaff;--ok:#067647;--ok-bg:#dcfae6}
+@media (prefers-color-scheme:dark){:root{--ink:#e8ebf3;--muted:#9aa3b5;--line:#2a3247;--bg:#0b1120;--card:#121a2c;
+--high:#fda29b;--high-bg:#3d1714;--med:#fec84b;--med-bg:#3a2a06;--low:#84adff;--low-bg:#102a56;--ok:#75e0a7;--ok-bg:#0b3320}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:24px 16px}h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:0}
+.sub{color:var(--muted);margin:0 0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.pill{font-weight:600;font-size:12px;padding:3px 10px;border-radius:999px}
+.HOLD,.high{color:var(--high);background:var(--high-bg)}.REVIEW,.medium{color:var(--med);background:var(--med-bg)}
+.low{color:var(--low);background:var(--low-bg)}.CLEAN{color:var(--ok);background:var(--ok-bg)}
+.meta{color:var(--muted);font-size:13px}.flag{border-top:1px solid var(--line);padding:12px 0}
+.flag p{margin:4px 0}.ev{font-style:italic;color:var(--muted)}.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;width:140px}
+.bar span{display:block;height:100%;background:var(--high)}footer{color:var(--muted);font-size:12px;margin-top:24px}
+</style></head><body><main>
+<h1>BillingBell Sentinel™ claim report</h1>
+<p class="sub">3 claim(s) · 2 hold · 0 review · 1 clean</p><section class="card"><div class="head"><div><h2>Claim DEMO-1001</h2>
+<div class="meta">Example Health Plan · AI check: skipped (AI disabled)</div></div>
+<div style="text-align:right"><span class="pill HOLD">HOLD</span>
+<div class="meta">Risk 50/100</div><div class="bar"><span style="width:50%"></span></div></div></div>
+<p>Do not submit. Fix the high-severity issues first.</p><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 2 · prior_auth · rule · CARC 197</span>
+<p><strong>72148 requires prior authorization for this payer, and no authorization number is on the claim.</strong></p><p>Fix: Obtain the authorization and add the number.</p>
+</div><div class="flag"><span class="pill medium">MEDIUM</span>
+<span class="meta"> Line 1 · modifier_25 · rule · CARC 4</span>
+<p><strong>E/M 99214 is billed with a procedure on the same day without modifier 25.</strong></p><p>Fix: Add 25 only if the note documents a significant, separately identifiable E/M service.</p>
+</div></section><section class="card"><div class="head"><div><h2>Claim DEMO-1002</h2>
+<div class="meta">Example Health Plan · AI check: skipped (no clinical note provided)</div></div>
+<div style="text-align:right"><span class="pill CLEAN">CLEAN</span>
+<div class="meta">Risk 0/100</div><div class="bar"><span style="width:0%"></span></div></div></div>
+<p>No issues found. Ready for biller sign-off.</p><p class="meta">No issues found.</p></section><section class="card"><div class="head"><div><h2>Claim DEMO-1003</h2>
+<div class="meta">Medicare · AI check: skipped (no clinical note provided)</div></div>
+<div style="text-align:right"><span class="pill HOLD">HOLD</span>
+<div class="meta">Risk 100/100</div><div class="bar"><span style="width:100%"></span></div></div></div>
+<p>Do not submit. Fix the high-severity issues first.</p><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Claim · npi · rule · CARC 16</span>
+<p><strong>billing_npi &#x27;1234567890&#x27; fails the NPI check-digit test.</strong></p><p>Fix: Confirm the NPI in NPPES.</p>
+</div><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 1 · em_time · rule · CARC 150</span>
+<p><strong>99204 needs at least 45 minutes; 25 documented (possible overcoding).</strong></p><p>Fix: Choose the level that matches the documented time.</p>
+</div><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 1 · global_period · rule · CARC 97</span>
+<p><strong>E/M 99204 falls inside a surgical global period without 24, 25, 57 or 79.</strong></p><p>Fix: Post-op care is included in the surgery; add a modifier only if the visit was unrelated.</p>
+</div><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 1 · new_patient · rule · CARC 16</span>
+<p><strong>New-patient code 99204 billed, but the patient was seen within 3 years.</strong></p><p>Fix: Use the matching established-patient code.</p>
+</div><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 2 · modifier_conflict · rule · CARC 4</span>
+<p><strong>Modifiers RT and LT conflict on the same line.</strong></p><p>Fix: Split into separate lines or remove one modifier.</p>
+</div><div class="flag"><span class="pill high">HIGH</span>
+<span class="meta"> Line 3 · ncci_ptp · rule · CARC 97</span>
+<p><strong>NCCI edit: 92081 is bundled into 15823 and cannot be unbundled.</strong></p><p>Fix: Remove 92081; a modifier will not bypass this edit.</p>
+</div><div class="flag"><span class="pill medium">MEDIUM</span>
+<span class="meta"> Line 1 · modifier_25 · rule · CARC 4</span>
+<p><strong>E/M 99204 is billed with a procedure on the same day without modifier 25.</strong></p><p>Fix: Add 25 only if the note documents a significant, separately identifiable E/M service.</p>
+</div></section>
+<footer>A trained person must review and approve every claim. Sentinel does not make clinical decisions.
+Research prototype by BillingBell Healthcare Systems. CPT® is a registered trademark of the American Medical Association.</footer>
+</main></body></html>
