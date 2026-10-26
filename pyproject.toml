@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["sentinel"]
+
+[project]
+name = "billingbell-sentinel"
+version = "1.0.0"
+description = "Verify AI-generated healthcare billing actions before submission"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "BillingBell Healthcare Systems LLC", email = "research@billingbell.com" }]
+dependencies = ["openai>=1.40"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+sentinel = "sentinel.cli:main"
+
+[tool.setuptools.package-data]
+sentinel = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
